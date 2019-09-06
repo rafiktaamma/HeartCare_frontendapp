@@ -1,0 +1,56 @@
+html,
+body,
+.view {
+  height: 100vh;
+  font-family: Raleway;
+}
+
+/* Full Page Carousel itself*/
+.carousel {
+  height: 100vh;
+}
+
+.carousel .carousel-inner {
+  height: 100vh;
+}
+
+.carousel .carousel-inner .carousel-item,
+.carousel .carousel-inner .active {
+  height: 100vh;
+}
+
+img {
+  &.d-block {
+    height: 100vh;
+  }
+}
+.carousel-caption{
+  bottom: 30vh;
+}
+
+
+//
+.navbar {
+  background-color: transparent;
+}
+ links .navbar-nav .nav-link{
+   color: red;
+   font-weight: bold;
+}
+.logo {
+  color: #4285F4;
+}
+
+.top-nav-collapse {
+  background-color: #4285F4;
+}
+/*
+@media only screen and (max-width: 768px) {
+  .navbar {
+    background-color: #4285F4;
+  }
+}*/
+
+.c1{
+  background-image: src("../assets/img/medical-student-bg.jpg");
+}

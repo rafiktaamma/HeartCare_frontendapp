@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h3>Choose File</h3>
+      <div class="form-group">
+        <button class="btn btn-light" onclick="document.getElementById('getFile').click()" >Upload</button>
+        <input type="file" name="image" (change)="fileProgress($event)" id="getFile" style="display: none"/>
+      </div>
+      <div *ngIf="fileUploadProgress">
+        <div>file uploaded : {{fileUploadProgress}}  </div>
+        <mat-progress-bar mode="determinate" [value]="fileUploadProgress" style="height: 10px;border-radius:10px"></mat-progress-bar>
+      </div>
+      <div class="image-preview mb-3" *ngIf="previewUrl">
+        <img [src]="previewUrl" height="300" />
+      </div>
+
+      <div class="mb-3" *ngIf="uploadedFilePath">
+        {{uploadedFilePath}}
+      </div>
+
+      <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
+                     (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+          Optional custom content that replaces the the entire default content.
+          
+        </ng-template>
+      </ngx-file-drop>
+
+      <div class="form-group">
+        <button class="btn btn-primary"  (click)="onSubmit()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

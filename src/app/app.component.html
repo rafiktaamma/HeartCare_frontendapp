@@ -1,0 +1,26 @@
+
+
+<!--
+<input type="file" (change)="fileChangeEvent($event)" />
+
+<image-cropper
+  [imageChangedEvent]="imageChangedEvent"
+  [maintainAspectRatio]="true"
+  [aspectRatio]="1 / 1"
+
+  [resizeToHeight]="128"
+  format="png"
+  (imageCropped)="imageCropped($event)"
+  (imageLoaded)="imageLoaded()"
+  (cropperReady)="cropperReady()"
+  (loadImageFailed)="loadImageFailed()"
+></image-cropper>
+
+<img [src]="croppedImage" />
+
+
+<img src="../assets/img/heartbeat.png" height="128px" width="128px"   id="image_1" #image1 (click)="f1($event)" />
+
+
+<p #text1  id="t1">rafik</p>-->
+<router-outlet></router-outlet>

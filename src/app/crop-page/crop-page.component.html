@@ -1,0 +1,28 @@
+<div>
+  <button class="btn btn-success" onclick="document.getElementById('getFile').click()" *ngIf="!valid && !imageload">Upload</button>
+  <input type="file" (change)="fileChangeEvent($event)"   id="getFile" style="display:none"  accept="image/png"/>
+
+
+  <button class="btn btn-danger" *ngIf="imageload && !valid" (click)="annuler()">Annuler</button>
+  <button class="btn btn-info" *ngIf="imageload && !valid" (click)="valider()">Valider</button>
+  <div>
+
+    <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="1 / 1"
+
+      [resizeToHeight]="128"
+      format="png"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded()"
+      (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()"
+      *ngIf="!valid"
+    ></image-cropper>
+
+  </div>
+  <div>
+    <img [src]="croppedImage"  *ngIf="valid"  />
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<mat-horizontal-stepper labelPosition="bottom" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Upload Ecg image </ng-template>
+
+      <ng-container>
+        <div class="row">
+          <div class="col-4">
+            <button class="btn btn-light" onclick="document.getElementById('getFile').click()" >Upload</button>
+            <input type="file" name="image" (change)="fileProgress($event)" id="getFile" style="display: none" formControlName="firstCtrl"/>
+          </div>
+          <div class="col">
+            <mat-divider vertical style="height: 100px;width: 4px"></mat-divider>
+          </div>
+          <div class="col-7">
+            <ngx-file-drop dropZoneLabel="Drop image here " (onFileDrop)="dropped($event)"
+                           (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+
+            </ngx-file-drop>
+          </div>
+        </div>
+
+      </ng-container>
+
+      <div>
+        <button mat-button matStepperNext  >Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Prepare the picture </ng-template>
+    <ng-container>
+      <image-cropper
+        [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="true"
+        [aspectRatio]="1 / 1"
+
+        [resizeToHeight]="128"
+        format="png"
+        (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()"
+        (cropperReady)="cropperReady()"
+        (loadImageFailed)="loadImageFailed()"
+
+      ></image-cropper>
+
+
+      <!--<div>
+        <img [src]="croppedImage"   />
+      </div>-->
+    </ng-container>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext (click)="onSubmit()">Next</button>
+    </div>
+  </mat-step>
+  <mat-step  >
+    <form >
+      <ng-template matStepLabel>Uploading</ng-template>
+      <mat-progress-bar mode="determinate" [value]="fileUploadProgress" style="height: 10px;border-radius:10px;width: 75%;margin: auto;"></mat-progress-bar>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
+
+
+<!-- Copyright 2019 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

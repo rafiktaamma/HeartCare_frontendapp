@@ -1,0 +1,64 @@
+
+
+<nav class="navbar  navbar-expand-md navbar-light bg-white fixed-top">
+  <a class="navbar-brand brand" href="#">HeartBeat</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item" >
+        <a class="nav-link mobileApp" pageScroll href="#second-row">Mobile App</a>
+      </li>
+      <li class="nav-item" >
+        <a class="nav-link doctor" href="#">I am a Doctor!</a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+
+
+
+<div class="container-fluid p-3" >
+  <div class="row py-5 px-2 mt-2 " id="first_row">
+    <div class="col-md-5 col-xs-10 mx-auto my-auto text-center" >
+      <h2 class="title1">How is your <span style="color: crimson;font-size: larger" >Heart</span> Doing !</h2>
+      <p class="first_p">HeartBeat is an Artificial Intelligence tool that classifies your state based on your  ECG (Electrocardioggramme) </p>
+      <p class="first_p">check your <span style="color: crimson;font-size: larger">Heart</span> Now !!</p>
+      <h3 class="first_p" style="font-weight: 500;font-size: 36px;line-height: 42px;">Upload your</h3>
+      <div class="row" id="button_row "  >
+        <button class="btn btn-primary rounded-lg boutton col-xs-5 mx-auto p-3 " (click)="openDialog2()"  >ECG picture</button>
+        <div class="col-xs-1 mx-0  p-0" style="text-align:center;"><p class="mt-3">Or</p></div>
+        <button class="btn btn-primary  rounded-lg boutton col-xs-5  mx-auto p-3"  (click)="openDialog()" >ECG File</button>
+      </div>
+    </div>
+    <div class="col-md-5  col-xs-4 mx-auto "    >
+      <img src="../assets/img/help.png" class="img-fluid  "  />
+    </div>
+  </div>
+  <div id="second-row" class="row py-5 px-2 mt-2 ">
+      <div class="col-md-5" id="phone_image_div">
+        <img src="../assets/img/phone.png" class="img-fluid"   />
+      </div>
+
+      <div class="col-md-6">
+          <p class="title2">ECG classification made easier than event  </p>
+
+          <p class="first_p text-left">Take a picture of your ECG using your phone, upload it and get the results instantly</p>
+          <div class="row">
+             <div class="col-md-5">
+               <img src="../assets/img/image 2.png"  height="50px" >
+             </div>
+             <div class="col-md-2">
+
+             </div>
+             <div class="col-md-5">
+               <img src="../assets/img/image 3.png" height="50vh">
+             </div>
+           </div>
+      </div>
+    </div>
+</div>
+
+
