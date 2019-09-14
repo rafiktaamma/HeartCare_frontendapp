@@ -2,11 +2,14 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ImageCroppedEvent} from 'ngx-image-cropper';
 import {FileSystemDirectoryEntry, FileSystemFileEntry, NgxFileDropEntry} from 'ngx-file-drop';
-import {HttpClient, HttpEventType} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpEventType} from '@angular/common/http';
 import {UploadService} from '../upload.service';
 import {AuthentificationService} from '../authentification.service';
 import {MatDialogRef, MatStepper} from '@angular/material';
 import {HomeComponent} from '../home/home.component';
+import {error} from 'util';
+import {catchError} from 'rxjs/operators';
+import {throwError} from 'rxjs';
 
 @Component({
   selector: 'app-modal-option',
@@ -94,6 +97,10 @@ export class ModalOptionComponent implements OnInit {
           console.log('SUCCESS !!');
 
         }
+
+      }, error => {
+        this.onNoClick();
+        alert("Error has occured ");
       });
   }
 

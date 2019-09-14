@@ -1,14 +1,14 @@
 
 
 <nav class="navbar  navbar-expand-md navbar-light bg-white fixed-top">
-  <a class="navbar-brand brand" routerLink="home">HeartBeat</a>
+  <a class="navbar-brand brand" routerLink="" pageScroll href="#home_page">HeartBeat</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item" >
-        <!--<a class="nav-link mobileApp" pageScroll  href="#second-row">Mobile App</a>-->
+        <a class="nav-link mobileApp" pageScroll  href="#second-row" routerLink="">Mobile App</a>
       </li>
       <li class="nav-item" >
         <a *ngIf="auth.isLoggedIn()" class="nav-link logout" (click)="auth.logout()">Logout</a>

@@ -122,7 +122,7 @@ Correct() {
 
   onSubmit() {
 
-      this.uploadSerive.UploadImage(this.fileData).subscribe(
+      this.uploadSerive.UploadImage(this.fileData,0).subscribe(
         events => {
           if(events.type === HttpEventType.UploadProgress) {
             this.fileUploadProgress = Math.round(events.loaded / events.total * 100) ;

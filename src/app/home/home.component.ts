@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   
   openDialog(): void {
     const dialogRef = this.dialog.open( ModalOptionComponent , {
-      height: '520px',
+      height: '540px',
       width: '600px'
     });
 

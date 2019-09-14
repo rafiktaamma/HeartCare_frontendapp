@@ -14,14 +14,16 @@ import {ModalEcgImageComponent} from './modal-ecg-image/modal-ecg-image.componen
 
 const routes: Routes = [
 
-  {path :'home',component:HomeComponent},
-  {path :'modal',component:ModalOptionComponent},
-  {path : 'upload', component:FileuploadComponent},
-  {path : 'drop', component:FiledropComponent},
-  {path : 'modal2',component:ModalUploadImageComponent},
+  {path :'' , component: HomeComponent},
+ /* {path :'home' , component: HomeComponent},*/
+  {path :'modal' , component: ModalOptionComponent},
+  {path : 'upload', component: FileuploadComponent},
+  {path : 'drop', component: FiledropComponent},
+  {path : 'modal2', component: ModalUploadImageComponent},
   {path : 'auth' , component: AuthComponent},
   {path : 'crop' , component : ImageCropperComponent},
-  {path : 'Modalcrop' , component : ModalEcgImageComponent}
+  {path : 'Modalcrop' , component : ModalEcgImageComponent},
+  {path :"**" , redirectTo : ""}
 
 
 ];

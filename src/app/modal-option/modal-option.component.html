@@ -29,7 +29,7 @@
 
       <div class="stepper_buttons_container  float-right  mb-0  row p-0">
         <p *ngIf="IsImageUploaded()" class="mx-3 my-auto">File Selected </p>
-        <button mat-button (click)="onNoClick()" class="btn btn-light mx-2 ">Cancel</button>
+        <button mat-button (click)="onNoClick()" class="btn bg-white mx-2 shadow-sm ">Cancel</button>
         <button mat-button matStepperNext   class="btn btn-primary " [disabled]="!IsImageUploaded() || EcgsampleRate==null" (click)="onSubmit()" >Next</button>
       </div>
 
@@ -98,7 +98,7 @@
       <button mat-button matStepperNext class="btn btn-primary" *ngIf="auth.isLoggedIn()">Next</button>
 
 
-      <button mat-button matStepperNext class="btn btn-secondary" *ngIf="!auth.isLoggedIn()" (click)="onNoClick()">Close</button>
+      <button mat-button matStepperNext class="btn bg-white mx-2 shadow-sm" *ngIf="!auth.isLoggedIn()" (click)="onNoClick()">Close</button>
 
 
     </div>

@@ -67,8 +67,8 @@ export class AppComponent {
 */
 
   constructor(public auth: AuthentificationService,private router: Router){
-    if(!auth.isLoggedIn())
-      this.router.navigateByUrl('/auth');
+    /*if(!auth.isLoggedIn())
+      this.router.navigateByUrl('/auth');*/
 
     if(auth.expired){  // access token expired
       if(!auth.refreshTokenExpired()){

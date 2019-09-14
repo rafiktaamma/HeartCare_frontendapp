@@ -1,4 +1,4 @@
-<mat-horizontal-stepper labelPosition="bottom" #stepper [linear]="true"   >
+<mat-horizontal-stepper labelPosition="bottom" #stepper    >
   <mat-step   [completed]="IsImageUploaded()" [editable]="false" >
 
     <ng-template matStepLabel >Upload Ecg image </ng-template>
@@ -25,7 +25,7 @@
 
     <div class="stepper_buttons_container  float-right  mb-0  row p-0 ">
       <p *ngIf="IsImageUploaded()" class="mx-3 my-auto">Image Selected </p>
-      <button mat-button (click)="onNoClick()" class="btn btn-light mx-2 ">Cancel</button>
+      <button mat-button (click)="onNoClick()" class="btn bg-white mx-2 shadow-sm ">Cancel</button>
       <button mat-button matStepperNext   class="btn btn-primary " [disabled]="!IsImageUploaded()" >Next</button>
     </div>
 
@@ -58,11 +58,15 @@
   </mat-step>
   <mat-step  [completed]="ecg()" [editable]="false">
     <ng-template matStepLabel>Number of pulses  </ng-template>
-    <div class="row rowStepper"  >
+    <div class="row rowStepper "  >
+      <div class="col-12 mt-2 mb-0 pb-0">
+       Note :  at least 3 pulses
+      </div>
 
-      <div>
-        <mat-form-field class="mt-4">
-          <input matInput  type="number" placeholder="Enter the Number of pulses  : "   [(ngModel)]='EcgPulses' required  autocomplete="off"/>
+      <div class="col-12 mt-0 mt-0 pt-0" style="text-align: center">
+
+        <mat-form-field class="mt-0" style="width:70% !important">
+          <input matInput  type="number" placeholder="Enter the Number of pulses :  "    [(ngModel)]='EcgPulses' required  autocomplete="off"/>
         </mat-form-field>
       </div>
     </div>
@@ -94,7 +98,7 @@
       </div>
 
   </mat-step>
-  <mat-step [editable]="false">
+  <mat-step [editable]="false" >
     <ng-template matStepLabel>Results</ng-template>
     <div class="container rowStepper"  >
 

@@ -61,7 +61,7 @@ export class ModalEcgImageComponent implements OnInit {
 
 
   ecg() : boolean {
-    return this.EcgPulses!=null;
+    return this.EcgPulses>2;
   }
 
   // Event fired after view is initialized
@@ -73,10 +73,16 @@ export class ModalEcgImageComponent implements OnInit {
   //
 
 
+  move(index: number) {
+
+    this.stepper.selectedIndex = index;
+    console.log(this.stepper.selectedIndex);
+  }
+
+
   constructor(private _formBuilder: FormBuilder,private http: HttpClient,
               public dialogRef: MatDialogRef<HomeComponent>,
               private uploadSerive : UploadService , public auth: AuthentificationService , private sanitizer : DomSanitizer ) {}
-
 
   onNoClick(): void {
      this.dialogRef.close();
@@ -87,10 +93,15 @@ export class ModalEcgImageComponent implements OnInit {
 
   }
 
+
   IsImageUploaded():boolean {
     //console.log(this.fileData);
     return this.fileData!=null;
   }
+
+
+
+
 
 
   Correct() {
@@ -100,22 +111,11 @@ export class ModalEcgImageComponent implements OnInit {
     this.uploadSerive.CorrectImage(this.croppedImage2 , this.SelectedCat).subscribe(res => console.log(res))
   }
 
-
-
-
-
-
   fileProgress(fileInput: any) {
     console.log(fileInput);
     this.fileData = <File>fileInput.target.files[0];
     this.imageChangedEvent = fileInput;
     // console.log(this.imageChangedEvent)
-  }
-
-  move(index: number) {
-
-    this.stepper.selectedIndex = index;
-    console.log(this.stepper.selectedIndex);
   }
 
 
@@ -132,7 +132,7 @@ export class ModalEcgImageComponent implements OnInit {
       this.previewUrl = reader.result;
     }
   }*/
-  onSubmit() {
+ /* onSubmit() {
     // i should send the cropped image
     this.uploadSerive.UploadImage(this.croppedImage2 , this.EcgPulses).subscribe(
       events => {
@@ -153,15 +153,41 @@ export class ModalEcgImageComponent implements OnInit {
 
           this.SelectedCat=this.MaxChoice();
           console.log(this.A_Ratio ,this.L_Ratio ,this.N_Ratio ,this.P_Ratio ,this.R_Ratio ,this.V_Ratio );
-          this.move(4);
           console.log('SUCCESS !!');
           this.fileUploadProgress=0;
+          this.move(4);
 
         }
       });
 
 
 
+
+  }*/
+  onSubmit() {
+    this.uploadSerive.UploadImage(this.croppedImage2 , this.EcgPulses).subscribe(
+      events => {
+        if (events.type === HttpEventType.UploadProgress) {
+          this.fileUploadProgress = Math.round(events.loaded / events.total * 100);
+          console.log(this.fileUploadProgress);
+
+        } else if (events.type === HttpEventType.Response) {
+          this.fileUploadProgress=0;
+          console.log(events.body);
+          this.A_Ratio=events.body.A;
+          this.L_Ratio=events.body.L;
+          this.N_Ratio=events.body.N;
+          this.P_Ratio=events.body.P;
+          this.R_Ratio=events.body.R;
+          this.V_Ratio=events.body.V;
+          this.SelectedCat = this.MaxChoice();
+          //this.fileUploadProgress = 0;
+          this.Reponse_Result = true;
+          this.move(4);
+          console.log('SUCCESS !!');
+
+        }
+      });
   }
 
 
