@@ -3,6 +3,7 @@ import {MatDialog} from '@angular/material';
 import {ModalOptionComponent} from '../modal-option/modal-option.component';
 import {ModalUploadImageComponent} from '../modal-upload-image/modal-upload-image.component';
 import {PageScrollConfig} from 'ng2-page-scroll';
+import {ModalEcgImageComponent} from '../modal-ecg-image/modal-ecg-image.component';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomeComponent implements OnInit {
   
   openDialog(): void {
     const dialogRef = this.dialog.open( ModalOptionComponent , {
-      height: '400px',
+      height: '520px',
       width: '600px'
     });
 
@@ -24,8 +25,8 @@ export class HomeComponent implements OnInit {
     });
   }
   openDialog2(): void {
-    const dialogRef = this.dialog.open( ModalUploadImageComponent , {
-      height: '400px',
+    const dialogRef = this.dialog.open( ModalEcgImageComponent , {
+      height: '600px',
       width: '600px'
     });
 
@@ -36,7 +37,7 @@ export class HomeComponent implements OnInit {
   }
 
   constructor(public dialog: MatDialog) {
-    PageScrollConfig.defaultDuration=150;
+    PageScrollConfig.defaultDuration=250;
   }
 
   ngOnInit() {

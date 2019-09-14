@@ -1,0 +1,87 @@
+<!--
+
+
+  <div class="container">
+    <mat-card>
+      <mat-card-title>Login</mat-card-title>
+      <mat-card-content>
+        &lt;!&ndash;[formGroup]="loginForm"&ndash;&gt;
+        <form  (submit)="login()">
+          <p>
+            <mat-form-field floatLabel="never">
+              <input type="text" matInput placeholder="Username" formControlName="username"  #username_email="ngModel" [(ngModel)]="credentials.username_email" required />
+
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field floatLabel="never">
+              <input type="password" matInput placeholder="Password" formControlName="password" #password="ngModel" [(ngModel)]="credentials.password" required />
+
+            </mat-form-field>
+          </p>
+
+
+
+          <div class="button">
+            <button type="submit" mat-button  class="btn btn-primary">Login</button>
+          </div>
+
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+-->
+
+
+
+<div class="container mt-4">
+
+  <div class="row ">
+
+    <div class="offset-md-3 col-md-6">
+
+
+      <h1 class="form-signin-heading">Sign in</h1>
+     <!-- <p class="lead">Not a member? Please <a routerLink="/register">register</a> instead.</p>-->
+
+      <form (submit)="login()">
+        <div class="form-group">
+          <!--<label for="email">Email / Username</label>-->
+          <mat-form-field floatLabel="never">
+          <input matInput  type="text" id="email"  name="username_email" placeholder="Enter username/email" #username_email="ngModel" [(ngModel)]="credentials.username_email"   autocomplete="off" required>
+          </mat-form-field>
+            <div *ngIf="username_email.errors && (username_email.invalid)">
+            <small class="text-danger form-text " *ngIf="username_email.errors.required">
+              <div >username/email must not be empty</div>
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+         <!-- <label for="password">Password</label>-->
+          <mat-form-field floatLabel="never">
+          <input  matInput  type="password" id="password"  name="password" placeholder="Password" #password="ngModel" [(ngModel)]="credentials.password" required>
+          </mat-form-field>
+            <div *ngIf="password.errors && ( password.invalid)">
+            <small class="text-danger form-text " *ngIf="password.errors.required">
+              <div >password must not be empty</div>
+            </small>
+          </div>
+        </div>
+
+
+        <div *ngIf="username_email.errors || password.errors; else elseBlock">
+          <button type="submit" class="btn btn-primary disabled" type="button">Sign in!</button>
+        </div>
+        <ng-template #elseBlock>
+          <button type="submit" class="btn btn-primary">Sign in!</button>
+        </ng-template>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+

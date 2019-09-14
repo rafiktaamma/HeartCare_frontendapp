@@ -1,26 +1,21 @@
 
 
-<!--
-<input type="file" (change)="fileChangeEvent($event)" />
+<nav class="navbar  navbar-expand-md navbar-light bg-white fixed-top">
+  <a class="navbar-brand brand" routerLink="home">HeartBeat</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item" >
+        <!--<a class="nav-link mobileApp" pageScroll  href="#second-row">Mobile App</a>-->
+      </li>
+      <li class="nav-item" >
+        <a *ngIf="auth.isLoggedIn()" class="nav-link logout" (click)="auth.logout()">Logout</a>
+        <a  *ngIf="!auth.isLoggedIn()" class="nav-link doctor"  routerLink="auth">I am a Doctor!</a>
+      </li>
 
-<image-cropper
-  [imageChangedEvent]="imageChangedEvent"
-  [maintainAspectRatio]="true"
-  [aspectRatio]="1 / 1"
-
-  [resizeToHeight]="128"
-  format="png"
-  (imageCropped)="imageCropped($event)"
-  (imageLoaded)="imageLoaded()"
-  (cropperReady)="cropperReady()"
-  (loadImageFailed)="loadImageFailed()"
-></image-cropper>
-
-<img [src]="croppedImage" />
-
-
-<img src="../assets/img/heartbeat.png" height="128px" width="128px"   id="image_1" #image1 (click)="f1($event)" />
-
-
-<p #text1  id="t1">rafik</p>-->
+    </ul>
+  </div>
+</nav>
 <router-outlet></router-outlet>

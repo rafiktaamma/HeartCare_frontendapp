@@ -1,0 +1,9 @@
+<h1>Angular cropperjs demo</h1>
+<input type="file" (change)="onFilePick($event)"/>
+<lib-cropper [imageFile]="fileInput" [options]="options" (fail)="onFail($event)" (fileChange)="onFileChange($event)" (crop)="onCrop($event)"  style="height:500px"></lib-cropper>
+
+
+<br>
+
+<img [src]="CroppedImage" />
+

@@ -1,0 +1,32 @@
+:host {
+  display: flex;
+  justify-content: center;
+  margin: 100px 0px;
+}
+
+.mat-form-field {
+  width: 100%;
+  min-width: 300px;
+}
+
+mat-card-title,
+mat-card-content {
+  display: flex;
+  justify-content: center;
+}
+
+
+/*.ng-tns-c3-0 .ng-star-inserted {
+  color: blue;
+}
+.mat-form-field-label  .mat-empty .mat-form-field-empty{
+  color: red;
+}*/
+
+
+
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+}

@@ -1,42 +1,42 @@
-<mat-horizontal-stepper labelPosition="bottom" #stepper>
-  <mat-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Upload Ecg image </ng-template>
+<mat-horizontal-stepper labelPosition="bottom" #stepper [linear]="true"   >
+  <mat-step   [completed]="IsImageUploaded()" [editable]="false" >
 
-      <ng-container>
-        <div class="row">
+      <ng-template matStepLabel >Upload Ecg image </ng-template>
+
+
+        <div class="row pb-0 rowStepper">
           <div class="col-4">
-            <button class="btn btn-light" onclick="document.getElementById('getFile').click()" >Upload</button>
-            <input type="file" name="image" (change)="fileProgress($event)" id="getFile" style="display: none" formControlName="firstCtrl"/>
+            <button class="btn btn-light mt-5" onclick="document.getElementById('getFile').click()" >Upload</button>
+            <input type="file" name="image" (change)="fileProgress($event)" id="getFile" style="display: none"   />
           </div>
-          <div class="col">
-            <mat-divider vertical style="height: 100px;width: 4px"></mat-divider>
+          <div class="col-1" >
+            <mat-divider vertical ></mat-divider>
           </div>
           <div class="col-7">
-            <ngx-file-drop dropZoneLabel="Drop image here " (onFileDrop)="dropped($event)"
-                           (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+            <ngx-file-drop dropZoneLabel="Drop your image here "    (onFileDrop)="dropped($event)"
+                           (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)" dropZoneClassName="drop_zone_class" contentClassName="drop_content_class">
 
             </ngx-file-drop>
           </div>
         </div>
 
-      </ng-container>
 
-      <div>
-        <button mat-button matStepperNext  >Next</button>
+
+      <div class="stepper_buttons_container  float-right  mb-0  row p-0 ">
+        <p *ngIf="IsImageUploaded()" class="mx-3 my-auto">Image Selected </p>
+        <button mat-button (click)="onNoClick()" class="btn btn-light mx-2 ">Cancel</button>
+        <button mat-button matStepperNext   class="btn btn-primary " [disabled]="!IsImageUploaded()" >Next</button>
       </div>
-    </form>
+
   </mat-step>
-  <mat-step>
+  <mat-step   >
     <ng-template matStepLabel>Prepare the picture </ng-template>
-    <ng-container>
+    <div class="row rowStepper" >
       <image-cropper
         [imageChangedEvent]="imageChangedEvent"
-        [maintainAspectRatio]="true"
-        [aspectRatio]="1 / 1"
+        [maintainAspectRatio]="false"
 
-        [resizeToHeight]="128"
-        format="png"
+        backgroundColor="blue"
         (imageCropped)="imageCropped($event)"
         (imageLoaded)="imageLoaded()"
         (cropperReady)="cropperReady()"
@@ -48,28 +48,129 @@
       <!--<div>
         <img [src]="croppedImage"   />
       </div>-->
-    </ng-container>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button matStepperNext (click)="onSubmit()">Next</button>
+    </div>
+    <div class="float-right mb-0 stepper_buttons_container">
+      <button mat-button (click)="onNoClick()" class="btn btn-light mx-2">Cancel</button>
+      <button  mat-button (click)="onSubmit()" matStepperNext  class="btn btn-primary">Next</button>
     </div>
   </mat-step>
-  <mat-step  >
+  <mat-step [completed]="Reponse_Result" [editable]="false"  >
     <form >
-      <ng-template matStepLabel>Uploading</ng-template>
-      <mat-progress-bar mode="determinate" [value]="fileUploadProgress" style="height: 10px;border-radius:10px;width: 75%;margin: auto;"></mat-progress-bar>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+      <ng-template matStepLabel >Uploading</ng-template>
+      <div class="row pb-0 rowStepper" >
+        <mat-progress-bar mode="{{Reponse_Result ? 'determinate' : 'indeterminate'}}"  [value]="100" style="height: 10px;border-radius:10px;width: 75%;margin: auto;"></mat-progress-bar>
+      </div>
+
+      <div class="stepper_buttons_container float-right  mb-0">
+        <button mat-button (click)="onNoClick()">Cancel</button>
+        <button mat-button matStepperNext class="btn btn-primary" [disabled]="!Reponse_Result">Next</button>
       </div>
     </form>
   </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    You are now done.
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+  <mat-step [editable]="false">
+    <ng-template matStepLabel>Results</ng-template>
+    <div class="container rowStepper"  >
+
+    <div class="row"  >
+      <div class="col-sm-12  text-center"  style="font-size:0.8em"  >A : Normal , L : Normal , N : Normal , P : Normal , R : Normal , V : Normal</div>
+
+    </div>
+
+    <div class="row my-3">
+        <div class="col-1 mx-0 px-0" >A:</div>
+        <div class="col-10 mx-0 px-0"><mat-progress-bar mode="determinate"  class="my-2" [value]="A_Ratio"  ></mat-progress-bar></div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-1 mx-0 px-0" >L:</div>
+        <div class="col-10 mx-0 px-0"><mat-progress-bar mode="determinate"  class="my-2" [value]="L_Ratio"  ></mat-progress-bar></div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-1 mx-0 px-0" >N:</div>
+        <div class="col-10 mx-0 px-0"><mat-progress-bar mode="determinate"  class="my-2" [value]="N_Ratio"  ></mat-progress-bar></div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-1 mx-0 px-0" >P:</div>
+        <div class="col-10 mx-0 px-0"><mat-progress-bar mode="determinate"  class="my-2" [value]="P_Ratio"  ></mat-progress-bar></div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-1 mx-0 px-0" >R:</div>
+        <div class="col-10 mx-0 px-0"><mat-progress-bar mode="determinate"  class="my-2" [value]="R_Ratio"  ></mat-progress-bar></div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-1 mx-0 px-0" >V:</div>
+        <div class="col-10 mx-0 px-0"><mat-progress-bar mode="determinate"  class="my-2" [value]="V_Ratio"  ></mat-progress-bar></div>
+    </div>
+
+
+
+
+
+    </div>
+    <div class="stepper_buttons_container float-right align-self-baseline">
+      <!--docotor auth-->
+      <button mat-button (click)="onNoClick()" class="btn btn-secondary" >Cancel</button>
+      <button mat-button matStepperNext class="btn btn-primary">Next</button>
+      <!--
+         <button mat-button        close >
+
+      -->
+    </div>
+  </mat-step>
+  <mat-step > <!-- ngif = auth.isLoggedIn  -->
+    <ng-template matStepLabel>Correct</ng-template>
+    <div class="container rowStepper"  >
+
+      <div class="row"  >
+        <div class="col-sm-12  text-center"  style="font-size:0.8em"  >A : Normal , L : Normal , N : Normal , P : Normal , R : Normal , V : Normal</div>
+
+      </div>
+      <mat-radio-group [(ngModel)]="SelectedCat"  >
+        <div class="row my-3">
+          <div class="col-1 mx-0 px-0" >A:</div>
+          <div class="col-10 mx-0 px-0"><mat-progress-bar mode="determinate"  class="my-2" [value]="A_Ratio"  ></mat-progress-bar></div>
+          <div class="col-1 mx-0 px-0 text-right"> <mat-radio-button value="A" ></mat-radio-button></div>
+        </div>
+        <div class="row my-3">
+          <div class="col-1 mx-0 px-0" >L:</div>
+          <div class="col-10 mx-0 px-0"><mat-progress-bar mode="determinate"  class="my-2" [value]="L_Ratio"  ></mat-progress-bar></div>
+          <div class="col-1 mx-0 px-0 text-right"> <mat-radio-button value="L"></mat-radio-button></div>
+        </div>
+
+        <div class="row my-3">
+          <div class="col-1 mx-0 px-0" >N:</div>
+          <div class="col-10 mx-0 px-0"><mat-progress-bar mode="determinate"  class="my-2" [value]="N_Ratio"  ></mat-progress-bar></div>
+          <div class="col-1 mx-0 px-0 text-right"> <mat-radio-button value="N"></mat-radio-button></div>
+        </div>
+
+        <div class="row my-3">
+          <div class="col-1 mx-0 px-0" >P:</div>
+          <div class="col-10 mx-0 px-0"><mat-progress-bar mode="determinate"  class="my-2" [value]="P_Ratio"  ></mat-progress-bar></div>
+          <div class="col-1 mx-0 px-0 text-right"> <mat-radio-button value="P"></mat-radio-button></div>
+        </div>
+
+        <div class="row my-3">
+          <div class="col-1 mx-0 px-0" >R:</div>
+          <div class="col-10 mx-0 px-0"><mat-progress-bar mode="determinate"  class="my-2" [value]="R_Ratio"  ></mat-progress-bar></div>
+          <div class="col-1 mx-0 px-0 text-right"> <mat-radio-button value="R"></mat-radio-button></div>
+        </div>
+
+        <div class="row my-3">
+          <div class="col-1 mx-0 px-0" >V:</div>
+          <div class="col-10 mx-0 px-0"><mat-progress-bar mode="determinate"  class="my-2" [value]="V_Ratio"  ></mat-progress-bar></div>
+          <div class="col-1 mx-0 px-0 text-right"> <mat-radio-button value="V"></mat-radio-button></div>
+        </div>
+
+      </mat-radio-group>
+
+    </div>
+    <div class="stepper_buttons_container float-right align-self-baseline">
+      <button mat-button (click)="Correct()"  class="btn btn-success">Correct</button>
+      <button mat-button (click)="onNoClick()" class="btn btn-secondary" >Close</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>

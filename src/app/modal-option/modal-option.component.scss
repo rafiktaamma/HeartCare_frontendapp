@@ -1,3 +1,15 @@
-ngx-file-drop {
 
+
+
+.rowStepper{
+  height: 300px;
+}
+mat-divider{
+  height: 100px;
+  width: 4px;
+}
+
+
+::ng-deep .mat-horizontal-stepper-header{
+  pointer-events: none !important;
 }

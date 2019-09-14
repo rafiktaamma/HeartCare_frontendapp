@@ -1,12 +1,15 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ImageCroppedEvent} from 'ngx-image-cropper';
+import {AuthentificationService} from './authentification.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit ,AfterViewInit{
+export class AppComponent {
+/*
 
   title = 'proj';
 
@@ -17,8 +20,8 @@ export class AppComponent implements OnInit ,AfterViewInit{
   imageChangedEvent: any = '';
   croppedImage: any = '';
   constructor(){
-  /*  console.log(this.text1.innerText)*/
-    /*this.text1=document.getElementById('t1');*/
+  /!*  console.log(this.text1.innerText)*!/
+    /!*this.text1=document.getElementById('t1');*!/
     //console.log(this.text1.innerText);
 
   }
@@ -61,6 +64,30 @@ export class AppComponent implements OnInit ,AfterViewInit{
 
   }
 
+*/
+
+  constructor(public auth: AuthentificationService,private router: Router){
+    if(!auth.isLoggedIn())
+      this.router.navigateByUrl('/auth');
+
+    if(auth.expired){  // access token expired
+      if(!auth.refreshTokenExpired()){
+        var refresh = window.confirm('Access token has expired, do you want to refresh your session ?');
+        if(refresh){
+          auth.tokenRefresh();
+          this.router.navigateByUrl('/home');
+        }else {
+          auth.logout();
+          this.router.navigateByUrl('/auth');
+        }
+      } else {  // refresh token expired
+        auth.logout();
+        this.router.navigateByUrl('/auth');
+      }
+      auth.expired = false;
+    }
+
+  }
 
 
 

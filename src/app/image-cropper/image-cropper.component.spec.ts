@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CropPageComponent } from './crop-page.component';
+import { ImageCropperComponent } from './image-cropper.component';
 
-describe('CropPageComponent', () => {
-  let component: CropPageComponent;
-  let fixture: ComponentFixture<CropPageComponent>;
+describe('ImageCropperComponent', () => {
+  let component: ImageCropperComponent;
+  let fixture: ComponentFixture<ImageCropperComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CropPageComponent ]
+      declarations: [ ImageCropperComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CropPageComponent);
+    fixture = TestBed.createComponent(ImageCropperComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

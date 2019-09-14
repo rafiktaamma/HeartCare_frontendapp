@@ -3,6 +3,11 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FileSystemDirectoryEntry, FileSystemFileEntry, NgxFileDropEntry} from 'ngx-file-drop';
 import {HttpClient, HttpEventType} from '@angular/common/http';
 import {ImageCroppedEvent} from 'ngx-image-cropper';
+import {MatDialogRef} from '@angular/material';
+import {HomeComponent} from '../home/home.component';
+import {UploadService} from '../upload.service';
+import {AuthentificationService} from '../authentification.service';
+import { MatStepper } from '@angular/material';
 
 @Component({
   selector: 'app-modal-upload-image',
@@ -12,28 +17,80 @@ import {ImageCroppedEvent} from 'ngx-image-cropper';
 export class ModalUploadImageComponent implements OnInit {
   imageChangedEvent: any = '';
   croppedImage: any = '';
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
+ // croppedImage2: any = '';
+
+
   public files: NgxFileDropEntry[] = [];
   fileData: File = null;
   previewUrl:any = null;
   fileUploadProgress: number = null;
+  Reponse_Result : boolean =false;
   uploadedFilePath: string = null;
+   step2 : boolean = false;
+   A_Ratio : any ;
+   L_Ratio : any ;
+   N_Ratio : any ;
+   P_Ratio : any ;
+   R_Ratio : any ;
+   V_Ratio : any ;
+  SelectedCat = '';
+  //
 
-  constructor(private _formBuilder: FormBuilder,private http: HttpClient) {}
+  //
 
-  ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
+
+  MaxChoice() : string{
+    if(this.A_Ratio ==  Math.max(this.A_Ratio,this.L_Ratio,this.N_Ratio,this.P_Ratio,this.R_Ratio,this.V_Ratio)) return 'A' ;
+    else if (this.L_Ratio ==  Math.max(this.A_Ratio,this.L_Ratio,this.N_Ratio,this.P_Ratio,this.R_Ratio,this.V_Ratio)) return 'L' ;
+    else if (this.N_Ratio ==  Math.max(this.A_Ratio,this.L_Ratio,this.N_Ratio,this.P_Ratio,this.R_Ratio,this.V_Ratio)) return 'N' ;
+    else if (this.P_Ratio ==  Math.max(this.A_Ratio,this.L_Ratio,this.N_Ratio,this.P_Ratio,this.R_Ratio,this.V_Ratio)) return 'P' ;
+    else if (this.R_Ratio ==  Math.max(this.A_Ratio,this.L_Ratio,this.N_Ratio,this.P_Ratio,this.R_Ratio,this.V_Ratio)) return 'R' ;
+    else if (this.V_Ratio ==  Math.max(this.A_Ratio,this.L_Ratio,this.N_Ratio,this.P_Ratio,this.R_Ratio,this.V_Ratio)) return 'V' ;
+
+
   }
 
 
+  /// stepper functions
 
 
+
+
+
+  // Event fired after view is initialized
+
+
+
+
+
+  //
+
+
+  constructor(private _formBuilder: FormBuilder,private http: HttpClient,
+              /*public dialogRef: MatDialogRef<HomeComponent>,*/
+               private uploadSerive : UploadService , public auth: AuthentificationService ) {}
+
+
+   onNoClick(): void {
+   // this.dialogRef.close();
+    this.Reponse_Result=false;
+  }
+
+  ngOnInit() {
+
+  }
+
+   IsImageUploaded():boolean {
+    //console.log(this.fileData);
+    return this.fileData!=null;
+   }
+
+
+Correct() {
+    console.log(this.croppedImage);
+    console.log("correct");
+    this.uploadSerive.CorrectImage(<File>this.croppedImage , this.SelectedCat).subscribe(res => console.log(res))
+}
 
 
 
@@ -41,16 +98,16 @@ export class ModalUploadImageComponent implements OnInit {
 
 
   fileProgress(fileInput: any) {
-
+     console.log(fileInput);
     this.fileData = <File>fileInput.target.files[0];
-    this.preview();
     this.imageChangedEvent = fileInput;
+   // console.log(this.imageChangedEvent)
   }
 
-  preview() {
+  /*preview() {
     // Show preview
     var mimeType = this.fileData.type;
-    if (mimeType.match(/image\/*/) == null) {
+    if (mimeType.match(/image\/!*!/) == null) {
       return;
     }
 
@@ -59,47 +116,46 @@ export class ModalUploadImageComponent implements OnInit {
     reader.onload = (_event) => {
       this.previewUrl = reader.result;
     }
-  }
+  }*/
+
+
 
   onSubmit() {
-    const formData = new FormData();
-    formData.append('files', this.fileData);
 
-    this.fileUploadProgress = 0;
+      this.uploadSerive.UploadImage(this.fileData).subscribe(
+        events => {
+          if(events.type === HttpEventType.UploadProgress) {
+            this.fileUploadProgress = Math.round(events.loaded / events.total * 100) ;
+            console.log(this.fileUploadProgress);
 
-    this.http.post('https://us-central1-tutorial-e6ea7.cloudfunctions.net/fileUpload', formData, {
-      reportProgress: true,
-      observe: 'events'
-    })
-      .subscribe(events => {
-        if(events.type === HttpEventType.UploadProgress) {
-          this.fileUploadProgress = Math.round(events.loaded / events.total * 100) ;
-          console.log(this.fileUploadProgress);
-        } else if(events.type === HttpEventType.Response) {
-          this.fileUploadProgress = 0;
-          console.log(events.body);
-          alert('SUCCESS !!');
-        }
+          } else if(events.type === HttpEventType.Response) {
+            //this.fileUploadProgress = 0;
+            this.Reponse_Result=true;
+            console.log(events.body);
+            this.A_Ratio=events.body.result.A*100;
+            this.L_Ratio=events.body.result.L*100;
+            this.N_Ratio=events.body.result.N*100;
+            this.P_Ratio=events.body.result.P*100;
+            this.R_Ratio=events.body.result.R*100;
+            this.V_Ratio=events.body.result.V*100;
+            this.SelectedCat=this.MaxChoice();
+            console.log('SUCCESS !!');
 
-      })
+          }
+      });
+
+
+
   }
 
-  /*onSubmit() {
-    const formData = new FormData();
-    formData.append('file', this.fileData);
-    this.http.post('https://us-central1-tutorial-e6ea7.cloudfunctions.net/fileUpload', formData)
-      .subscribe(res => {
-        console.log(res);
-        this.uploadedFilePath = res.data.filePath;
-        alert('SUCCESS !!');
-      });
-  }*/
+
 
 
 
 
   public fileOver(event){
     console.log(event);
+
   }
 
   public fileLeave(event){
@@ -107,9 +163,14 @@ export class ModalUploadImageComponent implements OnInit {
   }
 
 
-  public dropped(files: NgxFileDropEntry[]) {
-    this.files = files;
-    for (const droppedFile of files) {
+
+
+
+  public dropped(files: any ) {
+    /*this.imageChangedEvent=files;
+    console.log(this.imageChangedEvent);*/
+    this.files = <NgxFileDropEntry[]>files;
+    for (const droppedFile of this.files) {
 
       // Is it a file?
       if (droppedFile.fileEntry.isFile) {
@@ -120,22 +181,10 @@ export class ModalUploadImageComponent implements OnInit {
           // Here you can access the real file
           console.log(droppedFile.relativePath, file);
           this.fileData=file;
-          this.preview();
-          /**
-           // You could upload it like this:
-           const formData = new FormData()
-           formData.append('logo', file, relativePath)
 
-           // Headers
-           const headers = new HttpHeaders({
-            'security-token': 'mytoken'
-          })
 
-           this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
-           .subscribe(data => {
-            // Sanitized logo returned from backend
-          })
-           **/
+
+
 
         });
       } else {
@@ -146,11 +195,18 @@ export class ModalUploadImageComponent implements OnInit {
     }
   }
 
+
+
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
+    // this.croppedImage2 = event.file;
+
     console.log("image cropped");
-    console.log(this.croppedImage)
+    //console.log(this.croppedImage)
   }
+
+
+
   imageLoaded() {
 
   }

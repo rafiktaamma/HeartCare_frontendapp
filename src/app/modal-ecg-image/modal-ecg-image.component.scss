@@ -1,0 +1,35 @@
+.stepper_buttons_container {
+
+}
+
+
+mat-progress-bar{
+  height: 5px;
+
+}
+.rowStepper{
+  height: 380px;
+}
+
+mat-divider{
+  height: 100px;
+  width: 4px;
+}
+
+::ng-deep .mat-horizontal-stepper-header{
+  pointer-events: none !important;
+}
+
+
+.img-container {
+  /* Never limit the container height here */
+  max-width: 100%;
+}
+
+.img-container img {
+  /* This is important */
+  width: 100%;
+}
+.cropper-canvas > img {
+  opacity: 0;
+}

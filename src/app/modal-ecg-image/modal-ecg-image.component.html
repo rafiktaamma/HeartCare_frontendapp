@@ -1,38 +1,84 @@
-<mat-horizontal-stepper labelPosition="bottom" #stepper >
-  <mat-step   [completed]="IsImageUploaded()" [editable]="false">
+<mat-horizontal-stepper labelPosition="bottom" #stepper [linear]="true"   >
+  <mat-step   [completed]="IsImageUploaded()" [editable]="false" >
 
-      <ng-template matStepLabel>Upload Ecg File</ng-template>
+    <ng-template matStepLabel >Upload Ecg image </ng-template>
 
 
-            <div class="row pb-0 rowStepper" >
-              <div class="col-4">
-                <button class="btn btn-light mt-5" onclick="document.getElementById('getFile').click()" >Upload</button>
-                <input type="file" name="image" (change)="fileProgress($event)" id="getFile" style="display: none" />
-              </div>
-              <div class="col-1">
-                <mat-divider vertical ></mat-divider>
-              </div>
-              <div class="col-7">
-                <ngx-file-drop dropZoneLabel="Drop ur file here" (onFileDrop)="dropped($event)"
-                               (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)" dropZoneClassName="drop_zone_class" contentClassName="drop_content_class">
+    <div class="row pb-0 rowStepper">
+      <div class="col-4">
+        <button class="btn btn-light mt-5" onclick="document.getElementById('getFile').click()" >Upload</button>
+        <input type="file" name="image" (change)="fileProgress($event)" id="getFile" style="display: none"   />
+      </div>
+      <div class="col-1" >
+        <mat-divider vertical ></mat-divider>
+      </div>
+      <div class="col-7">
+        <ngx-file-drop dropZoneLabel="Drop your image here "    (onFileDrop)="dropped($event)"
+                       (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)" dropZoneClassName="drop_zone_class" contentClassName="drop_content_class">
 
-                </ngx-file-drop>
-                <div>
-                  <mat-form-field class="mt-4">
-                  <input matInput  type="number" placeholder="Enter the Sampling Rate : "   [(ngModel)]='EcgsampleRate' autocomplete="off" required/>
-                  </mat-form-field>
-                </div>
-              </div>
-            </div>
+        </ngx-file-drop>
+
+      </div>
+    </div>
 
 
 
-      <div class="stepper_buttons_container  float-right  mb-0  row p-0">
-        <p *ngIf="IsImageUploaded()" class="mx-3 my-auto">File Selected </p>
-        <button mat-button (click)="onNoClick()" class="btn btn-light mx-2 ">Cancel</button>
-        <button mat-button matStepperNext   class="btn btn-primary " [disabled]="!IsImageUploaded() || EcgsampleRate==null" (click)="onSubmit()" >Next</button>
+    <div class="stepper_buttons_container  float-right  mb-0  row p-0 ">
+      <p *ngIf="IsImageUploaded()" class="mx-3 my-auto">Image Selected </p>
+      <button mat-button (click)="onNoClick()" class="btn btn-light mx-2 ">Cancel</button>
+      <button mat-button matStepperNext   class="btn btn-primary " [disabled]="!IsImageUploaded()" >Next</button>
+    </div>
+
+  </mat-step>
+  <mat-step   >
+    <ng-template matStepLabel>Prepare the picture </ng-template>
+    <div class="row "  >
+      <div class="col-12 mb-3">
+        You have to crop at least 3 pulses
       </div>
 
+        <lib-cropper [imageFile]="fileData" [options]="options" (fail)="onFail($event)" (fileChange)="onFileChange($event)"
+        class="img-fluid"></lib-cropper>
+
+
+      </div>
+
+
+
+      <!--<div>
+        <img [src]="croppedImage"   />
+      </div>-->
+    
+    <div class="float-right mb-0 stepper_buttons_container">
+      <button mat-button (click)="onNoClick()" class="btn btn-light mx-2">Cancel</button>
+      <button  mat-button
+      matStepperNext  class="btn btn-primary">Next</button>
+      <!--(click)="onSubmit()"-->
+    </div>
+  </mat-step>
+  <mat-step  [completed]="ecg()" [editable]="false">
+    <ng-template matStepLabel>Number of pulses  </ng-template>
+    <div class="row rowStepper"  >
+
+      <div>
+        <mat-form-field class="mt-4">
+          <input matInput  type="number" placeholder="Enter the Number of pulses  : "   [(ngModel)]='EcgPulses' required  autocomplete="off"/>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+
+    <!--<div>
+      <img [src]="croppedImage"   />
+    </div>-->
+
+    <div class="float-right mb-0 stepper_buttons_container">
+      <button mat-button (click)="onNoClick()" class="btn btn-light mx-2">Cancel</button>
+      <button  mat-button
+               matStepperNext  class="btn btn-primary" [disabled]="!ecg()" (click)="onSubmit()">Next</button>
+      <!--(click)="onSubmit()"-->
+    </div>
   </mat-step>
   <mat-step [completed]="Reponse_Result" [editable]="false"  >
 

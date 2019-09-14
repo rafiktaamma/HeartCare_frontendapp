@@ -6,13 +6,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {ImageCropperModule} from 'ngx-image-cropper';
-import { CropPageComponent } from './crop-page/crop-page.component';
+
 import { HomeComponent } from './home/home.component';
 import { ModalOptionComponent } from './modal-option/modal-option.component';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatInputModule} from '@angular/material';
+import {MAT_RADIO_DEFAULT_OPTIONS, MatInputModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import { FileuploadComponent } from './fileupload/fileupload.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -23,16 +23,28 @@ import {MatDividerModule} from '@angular/material/divider';
 import { ModalUploadImageComponent } from './modal-upload-image/modal-upload-image.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {Ng2PageScrollModule} from 'ng2-page-scroll';
+import { AuthComponent } from './auth/auth.component';
+import {MatCardModule} from '@angular/material/card';
+import {UploadService} from './upload.service';
+import {MatRadioModule} from '@angular/material/radio';
+import {AuthentificationService} from './authentification.service';
+import { ImageCropperComponent } from './image-cropper/image-cropper.component';
+import { NgxCropperJsModule } from 'ngx-cropperjs-wrapper';
+import { ModalEcgImageComponent } from './modal-ecg-image/modal-ecg-image.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    CropPageComponent,
     HomeComponent,
     ModalOptionComponent,
     FileuploadComponent,
     FiledropComponent,
-    ModalUploadImageComponent
+    ModalUploadImageComponent,
+    AuthComponent,
+    ImageCropperComponent,
+    ModalEcgImageComponent,
+
 
   ],
   imports: [
@@ -52,9 +64,15 @@ import {Ng2PageScrollModule} from 'ng2-page-scroll';
     MatProgressBarModule,
     MatDividerModule,
     MatDialogModule,
-    Ng2PageScrollModule
+    Ng2PageScrollModule,
+    MatCardModule,
+    MatRadioModule,
+    NgxCropperJsModule
   ],
-  providers: [],
+  providers: [UploadService,AuthentificationService,{
+    provide: MAT_RADIO_DEFAULT_OPTIONS,
+    useValue: { color: 'primary' },
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
