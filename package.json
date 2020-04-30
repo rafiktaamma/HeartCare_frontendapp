@@ -28,7 +28,7 @@
     "chart.js": "^2.5.0",
     "cropperjs": "^1.5.5",
     "hammerjs": "^2.0.8",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "ng2-img-cropper": "^0.9.0",
     "ng2-page-scroll": "^4.0.0-beta.12",
     "ngx-cropperjs-wrapper": "^0.1.5",
